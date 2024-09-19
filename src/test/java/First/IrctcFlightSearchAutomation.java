@@ -33,7 +33,8 @@ public class IrctcFlightSearchAutomation {
             if (driver == null) {
                 return;
             }
- 
+            
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.get("https://www.air.irctc.co.in/");
  
             // Maximizing the window and verifying the respective application
@@ -42,13 +43,11 @@ public class IrctcFlightSearchAutomation {
             // Selecting Hyderabad in Origin
             WebElement frombox = driver.findElement(By.id("stationFrom"));
             frombox.sendKeys("Hyd");
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.findElement(By.xpath("//div[text()='Hyderabad (HYD)']")).click();
  
             // Selecting Pune in Destination
             WebElement toBox = driver.findElement(By.id("stationTo"));
             toBox.sendKeys("Pune");
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             List<WebElement> options = driver.findElements(By.className("ui-menu-item"));
             for (WebElement option : options) {
                 if (option.getText().contains("Pune (PNQ)")) {
@@ -73,7 +72,6 @@ public class IrctcFlightSearchAutomation {
             driver.findElement(By.xpath("//button[normalize-space()='Search']")).click();
  
             // Verifying the results shown are valid
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             try {
                 driver.findElement(By.xpath("(//a[contains(text(),'Flight Details')])[1]")).click();
                 WebElement cityDate = driver.findElement(By.xpath("(//strong[contains(text(),'Hyderabad (HYD)')])[1]"));
@@ -99,7 +97,6 @@ public class IrctcFlightSearchAutomation {
             }
             
             // Capturing screenshot
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             TakesScreenshot ts = (TakesScreenshot) driver;
             File sourceFile = ts.getScreenshotAs(OutputType.FILE);
             File destinationFile = new File("C:\\Users\\2319692\\eclipse-workspace\\IRCTC_Flight_Search\\screenshot.jpeg");
